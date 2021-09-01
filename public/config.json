@@ -1,0 +1,21 @@
+{
+  "API_BASE_URL": "http://localhost:5000/",
+  "FNT_PLANNING_URL": "http://10.90.39.2:9090/html/planning/detail/protocol/{id}?sid={sid}",
+  "FNT_EQUIPMENT_URL": "http://10.90.39.2:9090/html/objmgmt/detail/objdata/{id}?sid={sid}",
+  "ADMINS_GROUP_ID": "GRP-ADMINS",
+  "NO_DOMAIN_ID": "WITHOUT",
+  "NETCOOL_LOGIN_URL": "netcool-login?sid=<sid>",
+  "FNT_FAULT_URL": "monitor-fault/<fault_id>",
+  "INTERVALS_TYPES": ["שנים", "חודשים", "שבועות", "ימים"],
+  "OUT_SRC_DOMAIN_ID": "OUT_SRC",
+  "REPORT_TYPES": [
+    { "id": "general_tasks", "name": "כללי משימות" },
+    { "id": "general_faults", "name": "כללי תקלות" },
+    { "id": "fault_until_timed", "name": "תקלות - כמה זמן עד לפעולת התזמון" },
+    {
+      "id": "fault_time_inc_out_source",
+      "name": "תקלות - זמן טיפול כולל פירוט גורמים חיצוניים"
+    }
+  ],
+  "FETCH_INTERVAL": 15000
+}
