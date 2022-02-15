@@ -13,6 +13,7 @@
     <v-card-text>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-text-field
+          ref="user"
           label="שם משתמש"
           name="login"
           prepend-icon="mdi-account"
@@ -21,6 +22,7 @@
         ></v-text-field>
 
         <v-text-field
+        ref="pass"
           id="password"
           label="סיסמה"
           name="password"
@@ -109,7 +111,11 @@ export default {
     action: String,
     actionParams: Object,
   },
-  mounted: async function () {},
+  mounted: async function () {
+    console.log(this.$refs.user) 
+    this.$refs.user.blur()
+    this.$refs.passanur.blur();;
+  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       let configPath;

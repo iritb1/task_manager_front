@@ -335,7 +335,7 @@
               @on-task-copy="onTaskCopy"
               @on-task-delete="onTaskDelete"
             ></taskCard>
-            <v-row
+           <v-row
               justify="center"
               v-if="formData['tasks'][formData['tasks'].length - 1]"
             >

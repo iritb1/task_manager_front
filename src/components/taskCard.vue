@@ -270,7 +270,7 @@
                     </v-btn>
                   </h3>
                 </label>
-                <v-checkbox
+                <!-- <v-checkbox
                   style="
                     margin-top: 0px;
                   "
@@ -278,7 +278,7 @@
                   :disabled="locked"
                   label="חובה"
                   :readonly="value.id > 0 && !value.editable"
-                ></v-checkbox>
+                ></v-checkbox> -->
                 <v-text-field
                   class="visable-errors"
                   style="
@@ -397,9 +397,13 @@
                     </tr>
                   </thead>
                   <tbody>
+                    <draggable v-model="value.check_list" @start="drag=true" @end="drag=false"  style="width: 30vw;">
                     <tr
                       v-for="(subTask, index) in value.check_list"
-                      :key="index"
+                      :key="index" style="display: flex;
+                        flex-direction: row;
+                        width: 30vw;
+                        justify-content: space-between;">
                     >
                       <td style="overflow-wrap: anywhere">
                         {{ subTask[0] }}
@@ -436,6 +440,7 @@
                         </div>
                       </td>
                     </tr>
+                    </draggable>
                   </tbody>
                 </template>
               </v-simple-table>
@@ -524,9 +529,9 @@
             </v-col>
             <v-col class="text-center" style="padding-left: 50px" cols="3">
               <span class="text-center datetime-picker">
+                <!-- :disabled="!value.editable || value.is_template || locked" -->
                 <h3>תאריך התחלה</h3>
                 <v-datetime-picker
-                  :disabled="!value.editable || value.is_template || locked"
                   date-format="dd/MM/yyyy"
                   :date-picker-props="{
                     locale: 'he-IL',
@@ -550,8 +555,8 @@
                 >
                   תאריך סיום
                 </h3>
+                <!-- :disabled="!value.editable || value.is_template || locked" -->
                 <v-datetime-picker
-                  :disabled="!value.editable || value.is_template || locked"
                   date-format="dd/MM/yyyy"
                   :date-picker-props="{
                     locale: 'he-IL',
@@ -816,14 +821,31 @@
             מחק
           </v-tooltip>
           <br />
+          <!-- <v-tooltip v-if="!isDragedPopUp" top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                :disabled="locked"
+                v-bind="attrs"
+                v-on="on"
+                color="orange"
+                fab
+                class="mt-2 action-button"
+                @click="onAddTask(formData.fatherTask.id, isTemplate)"
+              >
+                <v-icon class="action-button-icon" style="color: white"
+                  >mdi-plus</v-icon
+                >
+              </v-btn>
+            </template>
+            הוספה
+          </v-tooltip>
+          <br /> -->
           <v-tooltip top>
+            <!-- :disabled="!valid || !computedIsEdited || !value.father_id || locked" -->
             <template v-slot:activator="{ on, attrs }">
               <v-btn
                 v-bind="attrs"
                 v-on="on"
-                :disabled="
-                  !valid || !computedIsEdited || !value.father_id || locked
-                "
                 color="success"
                 fab
                 class="mt-2 action-button"
@@ -841,7 +863,7 @@
               <v-btn
                 v-bind="attrs"
                 v-on="on"
-                color="orange"
+                color="green"
                 fab
                 class="mt-2 action-button"
                 @click="showReportArea = true"
@@ -873,6 +895,24 @@
             </template>
             שכפל תת משימה
           </v-tooltip>
+        
+          <!-- <v-row
+              justify="center"
+              v-if="formData['tasks'][formData['tasks'].length - 1]"
+            >
+              <v-col cols="12" class="text-center">
+                <v-btn
+                  :class="{ 'disable-events': formData.fatherTask.locked }"
+                  :color="formData.fatherTask.locked ? 'grey' : 'success'"
+                  fab
+                  large
+                  dark
+                  @click="onAddTask(formData.fatherTask.id, isTemplate)"
+                >
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row> -->
         </div>
       </v-form>
     </v-card>
@@ -898,11 +938,13 @@ import { api } from "../apiConfig";
 import { addMinutes } from "date-fns";
 import moment from "moment";
 import _ from "lodash";
+import draggable from "vuedraggable";
 import ReportsArea from "./reportsArea.vue";
 // import axios from "axios";
 export default {
   components: {
     reportsArea,
+    draggable,
   },
   props: {
     isDragedPopUp: {
@@ -1059,12 +1101,14 @@ export default {
       uploadProgress: 0,
       files: [],
       loadash: _,
+      fatherTaskId: null,
       equipmentdescriptionLimit: 50,
       equipmenEntries: [],
       buildingsEntries: this.value.building.name ? [this.value.building] : [],
       isEquipmenLoading: false,
       isBuildingLoading: false,
       equipmentSearch: null,
+      isTemplate: null,
       buildingSearch: null,
       NewsubTaskText: "",
       validationRules: {
@@ -1101,6 +1145,18 @@ export default {
         this.$store.dispatch("snackbar/setSnackbar", {
           color: "orange",
           text: `הכנס טקסט, תת משימה ריקה`,
+        });
+      }
+    },
+    onAddTask(fatherTaskId, isTemplate) {
+      if (this.formData["tasks"][this.formData["tasks"].length - 1].id > 0) {
+        this.formData.tasks.push(
+          this.createBlankTask(fatherTaskId, isTemplate)
+        );
+      } else {
+        this.$store.dispatch("snackbar/setSnackbar", {
+          color: "orange",
+          text: `משימה חדשה קודמת עוד לא נשמרה`,
         });
       }
     },

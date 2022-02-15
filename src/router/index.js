@@ -7,11 +7,11 @@ import calanderView from "../views/CalanderView";
 const netcoolLoginView = () => import(/* webpackChunkName: "netcoolLoginView" */ "../views/netcoolLoginView")
 const monitorFaultView = () => import(/* webpackChunkName: "monitorFaultView" */ "../views/MonitorFaultView")
 const fatherTasksTabView = () => import(/* webpackChunkName: "fatherTasksTabView" */ "../views/FatherTasksTab")
-const TasksMapTab = () => import(/* webpackChunkName: "fatherTasksTabView" */ "../views/TasksMapTab")
+// const TasksMapTab = () => import(/* webpackChunkName: "fatherTasksTabView" */ "../views/TasksMapTab")
 const workTemplatesView = () => import(/* webpackChunkName: "workTemplatesView" */ "../views/workTemplates")
 const scheduleTasksView = () => import(/* webpackChunkName: "scheduleTasksView" */ "../views/ScheduleTasksView")
 const reportsView = () => import(/* webpackChunkName: "reportsView" */ "../views/reportsView")
-const GanttView = () => import(/* webpackChunkName: "GanttView" */ "../views/GanttView")
+// const GanttView = () => import(/* webpackChunkName: "GanttView" */ "../views/GanttView")
 
 
 Vue.use(VueRouter);
@@ -46,14 +46,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: fatherTasksTabView,
   },
-  {
-    path: "/map",
-    name: "TasksMapTab",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: TasksMapTab,
-  },
+  // {
+  //   path: "/map",
+  //   name: "TasksMapTab",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: TasksMapTab,
+  // },
   {
     path: "/work-templates",
     name: "workTemplates",
@@ -87,14 +87,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: reportsView,
   },
-  {
-    path: "/gantt",
-    name: "GanttView",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: GanttView,
-  },
+  // {
+  //   path: "/gantt",
+  //   name: "GanttView",
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: GanttView,
+  // },
  
 ];
 

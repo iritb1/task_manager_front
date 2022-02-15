@@ -16,8 +16,8 @@
 
         <v-tab v-if="isLogedIn" to="/calander"><div>לוח שנה</div></v-tab>
         <v-tab v-if="isLogedIn" to="/tasks"><div>משימות</div></v-tab>
-        <v-tab v-if="isLogedIn" to="/gantt"><div>גאנטט</div></v-tab>
-        <v-tab v-if="isLogedIn" to="/map"><div>מפה</div></v-tab>
+        <!-- <v-tab v-if="isLogedIn" to="/gantt"><div>גאנטט</div></v-tab>
+        <v-tab v-if="isLogedIn" to="/map"><div>מפה</div></v-tab> -->
         <v-tab v-if="isLogedIn" to="/work-templates">שבלונות עבודה</v-tab>
         <v-tab v-if="isLogedIn" to="/schedule-tasks">עבודות חוזרות</v-tab>
         <v-tab v-if="isLogedIn" to="/reports">דוחות</v-tab>

@@ -16,9 +16,10 @@
           style="max-width: 15%; padding-top: 20px; margin-right: 160px"
           v-model="managerSearch"
           :items="$store.state.metadata.persons"
+          :search-input.sync="searchInput"
+          @change="searchInput=''"
           item-text="name"
           item-value="id"
-          deletable-chips
           multiple
           small-chips
         >
@@ -30,6 +31,40 @@
             </template>
           </template>
         </v-autocomplete>
+        <!-- fix persons -->
+        <v-text-field
+           style="max-width: 15%; margin-right: 50px"
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="חיפוש לפי כותרת"
+          single-line
+          hide-details
+        >
+          <template v-slot:item="data">
+            <template>
+              <v-list-item-content
+                v-text="data.item.name"
+              ></v-list-item-content>
+            </template>
+          </template>
+        </v-text-field>
+        <!-- fix persons -->
+        <!-- <v-text-field
+          style="max-width: 15%; margin-right: 50px"
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="חיפוש לפי תת כותרת"
+          single-line
+          hide-details
+        >
+          <template v-slot:item="data">
+            <template>
+              <v-list-item-content
+                v-text="data.item.name"
+              ></v-list-item-content>
+            </template>
+          </template>
+        </v-text-field> -->
         <v-select
           style="max-width: 15%; padding-top: 10px; margin-right: 50px"
           v-model="domainsFilter"
@@ -45,6 +80,8 @@
             v-model="staffFilter"
             label="צווות משובץ"
             :items="allStaffByDomains"
+            :search-input.sync="searchInput"
+            @change="searchInput=''"
             item-text="name"
             item-value="id"
             :filter="entitySearch"
@@ -300,6 +337,7 @@ export default {
       ],
       expanded: [],
       search: "",
+      searchInput:'',
       managerSearch: [this.$store.state.userData.uid],
       subTasks: [
         "תת משימה #1 - פריסת כבלים",
@@ -312,7 +350,9 @@ export default {
           value: "fatherTask.id",
           width: "10%",
         },
+        //fix תת כותרת
         { text: "כותרת", value: "fatherTask.title", width: "18%" },
+        { text: "תת כותרת", value: "fatherTask.title", width: "18%" },
         { text: "מנהל", value: "fatherTask.manager", width: "18%" },
         { text: "דדליין", value: "fatherTask.deadline", width: "18%" },
         { text: "סטטוס", value: "fatherTask.status_id", width: "18%" },

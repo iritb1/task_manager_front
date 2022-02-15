@@ -28,6 +28,8 @@
           v-model="staffFilter"
           label="צווות משובץ"
           :items="allStaffByDomains"
+          :search-input.sync="searchInput"
+          @change="searchInput=''"
           item-text="name"
           item-value="id"
           :filter="entitySearch"
@@ -156,7 +158,7 @@
               :key="task.id"
               :id="task.id"
               :style="[
-                task.color ? { backgroundColor: task.color } : {},
+                task.color ? { backgroundColor: 'white' } : {},
                 { overflow: 'hidden' },
               ]"
               @click="
@@ -172,6 +174,13 @@
             >
               <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                  :style="[
+                task.color ? { color: task.color } : {},
+                { overflow: 'hidden' },
+              ]"
+               style=" font-size: 17px; float: left"
+                  >{{icons.mdiCheckboxBlankCircle}}</v-icon>
                   <div v-bind="attrs" v-on="on">
                     {{
                       "\xa0" +
@@ -215,6 +224,7 @@
                 </template>
 
                 <div>{{ getFatherTaskTitle(task.father_id) }}</div>
+                
               </v-tooltip>
             </div>
             <hr
@@ -237,6 +247,7 @@
 import moment from "moment";
 import { Draggable } from "@fullcalendar/interaction";
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import { mdiCheckboxBlankCircle } from '@mdi/js';
 import tippy from "tippy.js";
 
 export default {
@@ -371,6 +382,9 @@ export default {
   },
   data: function () {
     return {
+      icons:{
+        mdiCheckboxBlankCircle,
+      },
       searchModeOptions: [
         { id: 1, name: "או" },
         { id: 2, name: "וגם" },
@@ -387,7 +401,7 @@ export default {
     const self = this;
     let draggableElements = document.getElementById("external-events-listing");
     new Draggable(draggableElements, {
-      itemSelector: ".fc-event.editable",
+      itemSelector: ".fc-event",
       eventData: function (eventEl) {
         return self.getTask(eventEl.id);
       },
